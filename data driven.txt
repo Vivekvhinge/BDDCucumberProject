@@ -335,8 +335,32 @@ In Test runner file "TestRunner.java" add extent report plugin
 plugin = {"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"},
 
 ##SESSION 11##
+1. What is Git & GitHub?
 what is git:
+for version control ,to manage source code ,and maintain it .
 workspace in eclipse >>staging [commit]>>git[local repo][push code] >> github [remote repo]
 
 what is git hub:
-opposite of git hub . github [remote repo]  >>[pull][local repo] GIt >>staging  >>workspsce
+opposite of git  . github [remote repo]  >>[pull][local repo] GIt >>staging  >>workspsce
+
+cucumberbbdprj link :https://github.com/Vivekvhinge/CucumberBDDProject.git
+Install git software in local machine
+Create account on git hub
+create remote repository in github
+go to working directory and open git bash by right clicking
+1) git init // to create local git repository
+2) git remote add origin [projectlink]
+3) git status //to know state of repository (untracked (red colors) and tracked file (green color)
+4) git add -A//to add files from working directory to staging area
+
+//one time command before first commit
+5) git config --global user.name "Vivekvhinge"
+6) git config --global user.email "vivekvhinge@gmail.com"
+
+7) git commit -m "First commit"  //it will send the file from local to staging area 
+
+8) git push -u origin master //tο files from local git repo to remote github repository.
+9) git pull origin master //tο files from remote github repository  to local git repo. 
+
+
+
