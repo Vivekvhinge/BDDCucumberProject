@@ -1,0 +1,62 @@
+What is Behavior Driven Development (BDD) Testing
+In BDD, test cases are written in a natural language that even non-programmers can read.
+In BDD, whatever you write must go into Given-When-Then steps.
+Given [Preconditions or Initial Context]
+When [Event or Trigger]
+Then [Expected output]
+Example: Login feature test case
+Given :URL of login page is open
+When : user enter username, password and clicks on login button
+Then : Home page shall be open
+
+What is Cucumber
+Cucumber is a testing approach which supports Behavior Driven Development (BDD). It explains the behavior of the application in a
+ simple English text using Gherkin language.
+Gherkin is a business readable language which helps you to describe business behavior without going into details of implementation.
+In Cucumber, test cases are described in cucumber feature file. Feature file should have extension .feature and each feature file
+should have only one feature.
+
+
+Important Terms Used In Gherkin Language:
+
+1.Feature[summary]
+2.Background [define steps that are common to all the tests in the feature file]
+3.Scenario [Title]
+4.Given [Precondition]
+5.When [Event/Action]
+6.Then [Expected Output of Action]
+7.And [add conditions to your steps]
+8.But [add negative type comments]
+9.Scenario Outline Examples
+
+
+Installation of Cucumber
+Install Java
+https://youtu.be/f-Cs8MlQB70
+Install Maven
+https://youtu.be/oilHZKw609M at 18:15
+Install Eclipse IDE for Java
+https://youtu.be/f-Cs8MIQB70
+Install Selenium Webdriver
+Install JUnit
+Install Cucumber
+
+
+
+Project Structure:
+Package
+1. PageObject :in this any applications webpages is consider as separate application like login,home,dashboard webpage is consider 
+as separate app,& for each webpage we maintain a separate class and we idenitfy webelement and actions in that .
+2. Step Definition
+3. Utilities
+4.TestRunner
+Folders:
+Feature file
+Target (Reports)
+Updated pom.xml for project dependencies
+created feature file (.feature) for login test feature  :in gherkin lang 
+created pageobject class for login web page :with webelements and actions to perform method
+created step definition file for feature file (login test feature) : to implents the feature file steps
+created test runner file to run test case
+Generated test report
+

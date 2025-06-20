@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Cucumber" time="21.787" tests="3" skipped="0" failures="3" errors="0">
+<testcase classname="Customers" name="Add New Customer" time="7.731">
+<failure type="java.lang.AssertionError">
+<![CDATA[java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at StepDefinition.Stepdef.user_can_view_dashboad(Stepdef.java:182)
+	at ✽.User can view Dashboad(file:///C:/Users/Admin/eclipse-workspace/CucumberFramework/src/test/resources/Features/Customer.feature:10)
+]]>
+</failure>
+<system-out><![CDATA[
+Given User launch chrome browser............................................passed
+When User open URL: "https://admin-demo.nopcommerce.com/login"..............passed
+And user enters email as "admin@yourstore.com" and password as "admin"......passed
+And click on login..........................................................passed
+Then User can view Dashboad.................................................failed
+When User click on customers Menu...........................................skipped
+And click on customers Menu Item............................................skipped
+And click on Add new button.................................................skipped
+Then User can view Add new customer page....................................skipped
+When User enter customer info...............................................skipped
+And click on Save button....................................................skipped
+Then User can view confirmation message "The new customer has been added successfully.".skipped
+And Close Browser...........................................................skipped
+]]></system-out>
+</testcase>
+<testcase classname="Customers" name="Search Customer by Email" time="6.953">
+<failure type="java.lang.AssertionError">
+<![CDATA[java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at StepDefinition.Stepdef.user_can_view_dashboad(Stepdef.java:182)
+	at ✽.User can view Dashboad(file:///C:/Users/Admin/eclipse-workspace/CucumberFramework/src/test/resources/Features/Customer.feature:10)
+]]>
+</failure>
+<system-out><![CDATA[
+Given User launch chrome browser............................................passed
+When User open URL: "https://admin-demo.nopcommerce.com/login"..............passed
+And user enters email as "admin@yourstore.com" and password as "admin"......passed
+And click on login..........................................................passed
+Then User can view Dashboad.................................................failed
+Given User launch chrome browser............................................skipped
+When User open URL: "https://admin-demo.nopcommerce.com/login"..............skipped
+And user enters email as "admin@yourstore.com" and password as "admin"......skipped
+And click on login..........................................................skipped
+Then User can view Dashboad.................................................skipped
+When User click on customers Menu...........................................skipped
+And click on customers Menu Item............................................skipped
+And Enter customer EMail....................................................skipped
+When Click on search button.................................................skipped
+Then User should found Email in the Search table............................skipped
+And Close Browser...........................................................skipped
+]]></system-out>
+</testcase>
+<testcase classname="login" name="Successful login with valid credentials by behaviour driven test" time="6.857">
+<failure type="java.lang.AssertionError">
+<![CDATA[java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at StepDefinition.Stepdef.page_title_should_be(Stepdef.java:146)
+	at ✽.page title should be "Dashboard / nopCommerce administration"(file:///C:/Users/Admin/eclipse-workspace/CucumberFramework/src/test/resources/Features/LoginFeature.feature:10)
+]]>
+</failure>
+<system-out><![CDATA[
+Given User launch chrome browser............................................passed
+When User open URL: "https://admin-demo.nopcommerce.com/login"..............passed
+And user enters email as "admin@yourstore.com" and password as "admin"......passed
+And click on login..........................................................passed
+Then page title should be "Dashboard / nopCommerce administration"..........failed
+When user click on log out link.............................................skipped
+Then Page title should be "Your store.Login"................................skipped
+And Close Browser...........................................................skipped
+]]></system-out>
+</testcase>
+</testsuite>

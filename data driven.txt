@@ -1,0 +1,342 @@
+
+in feature file :
+scenario outline  instead of scenario 
+eg : Scenario outline : Successful login with valid credentials
+ & instead of hardcode data  like :And user enters email as "admin@yourstore.com" and password as "admin"
+USE : And user enters email as "<email>" and password as "<PASSWORD>" .[so we can store multiple data .]
+then in Examples : write the data set 
+|email|password|
+| admin@yourstore.com|admin|  <---like this ,and if u have eneter 4 data then it will execute it by 4 times
+
+
+Session#2
+---------
+Data Driven Testing
+	Scenario outline keyword
+	Examples:
+Generated Reports in HTML, JSON & XML format
+Added new feature file (Add new customer)
+	Created feature file (customers.feature)
+	Added test steps in Gherkin language
+	Created page object class for add new customer page
+	created step definition for customers.feature file 
+	Executed test script (customers.feature) using test 	runner file (run.java)
+	
+Session#3
+Added new scenarios in customers.feature file
+Scenario: Search customer by email
+Scenario: Search customer by name
+Background keyword: for common / repeating steps in scenarios  mention this in feature file below feature:
+
+eg :
+Background:steps common for all scenario
+	Given User launch chrome browser
+    When User open URL: "https://admin-demo.nopcommerce.com/login"
+    And user enters email as "admin@yourstore.com" and password as "admin"
+    And click on login
+    Then User can view Dashboad
+    
+    
+    
+
+Session#4
+A)Base class: is created in step defn file to maintain the common methods & variable .
+& extend the step den file means base class will be parent class and step defn file will be child class
+
+//create a class in baseclass for emailid so  it will create unique email id so every time we don't have to hardcoded for new mail 
+	public String generatemailid()
+	{
+		return (RandomStringUtils.randomAlphabetic(5)); //RandomStringUtils to generate random strings &randomAlphabetic for alphabet length
+	}
+	
+B)Executing multiple feature files  or stepdefintion : in testrunnerclass
+1.multiple :to run it just remove file name after feature folder:
+eg : features = "src/test/resources/Features",
+2.in that u can select a single feature file to run 
+eg : features = "src/test/resources/Features/LoginFeature.feature",
+3.to run specific feature files 
+eg : features = {"src/test/resources/Features/LoginFeature.feature","src/test/resources/Features/Customer.feature"},
+
+C)@Tags (or, and & and not operator).: 
+* You put `@something` (like `@smoke` or `@regression`) above a test in your feature file.
+* Then, in your `TestRunner` file, you tell Cucumber which groups (`@smoke`, `@regression`, etc.) you want to run.
+* You can use `and`, `or`, `not` to combine these groups.
+When defining the tags attribute in your @CucumberOptions in TestRunner.java, you use logical operators to specify which scenarios to run:
+
+tags = "@Sanity": This will run any scenario that is tagged with @Sanity. It will execute even if the scenario also has other tags.
+
+tags = "@Sanity or @Regression": This will run any scenario that is tagged with either @Sanity OR @Regression (or both).
+
+tags = "@Sanity and @Regression": This will run only those scenarios that are tagged with both @Sanity AND @Regression. it will not run like "Or" tag		
+
+tags = "@Sanity and not @Regression": This will run scenarios that are tagged with @Sanity but are not also tagged with @Regression.
+
+* This is super useful if you only want to run a quick set of "sanity" tests, or all "regression" tests, instead of running everything.
+
+
+
+
+
+
+
+
+
+
+Session#5
+Types of hooks
+Scenario hook: @Before //executed before start of each scenario execution & @After //executed after completion of each scenario execution
+Step Hooks:
+@Beforestep //executed before each step execution
+@Afterstep //is executed before after each step execution
+Conditional hook: @Before("@Sanity")
+How to capture screen shot screen shot of failed test scenarios 
+Hooks  [in step definition class] similar to TESTNG LISTERNERS 
+Hooks are block of code that runs before and after each scenario.
+type of hooks in cucumber:
+1. Scenario hooks: runs before/after each scenario.
+@Before Annotation //steps to performs before start of testing of each scenario & can give multiple before(order=0) like this. 0 ascending order small to big
+Setup code:
+To Start a web driver
+Set up of Data Base connections
+Set up of test data
+Set up of browser cookies
+Navigation to a certain page
+
+@After Annotation //steps to perform after testing of each scenario & can give multiple after(order=0) like this. 0 descending order big to small
+Cleanup/code teardown:
+To stop the web driver
+To Close DB connections
+To Clear the test data
+To Clear browser cookies
+To Log out from the application
+Printing reports or logs
+Taking the screenshots of error
+
+
+2.Step Hooks: These run before or after each individual step.
+3.Conditional Hooks: These allow you to associate hooks with tags for conditional execution, meaning they only run if the associated scenario 
+or feature has a specific tag.
+syntax :before("@sanity") ,@sanity from feature file
+
+4.how to take failed SS in stepdefn file
+create class scenario in parameter of Scenario 
+eg:@After
+	public void teardown(Scenario sc)
+	now write the same code for taking ss
+	
+	
+	
+Session#6
+Logger integration in eclipse
+Apache-Log4j 2
+
+log4j2: or refer to package log4j
+first give dependency in poml file
+second In Base class create logger object ie.public static Logger log; & import org.apache.logging.log4j.*;
+
+third in stepdefn file instantiate it ie.log=Logmanager.getlogger("stepdefn"); 
+logmanager import must be "import org.apache.logging.log4j.LogManager;"
+
+change/give  class name in log4j2.properties file
+ie.logger.file.name=Stepdef //class name to be rename    
+
+write message below drivermanger
+ie :log.info("log setup method is executed ....."); <---give this where you want the logs for methods 
+LOG LEVELS:
+		https://logging.apache.org/log4j/2.x/manual/customloglevels.html
+
+
+Session-7:
+1.Run test cases / feature file on specific browser
+2.configurtion.properties :write parameters or values in keyvaluepair and variables too, no special char to end 
+eg :key[variable]=value
+browser=chrome
+
+3.read properties : use properties class to instantiate [after config is done]
+create obj of properties in base class and instantiate in step defn class like below:
+now create obj of fileinputstream for readonly mode to open of readconfig/configproperties file
+			FileInputStream fis=new FileInputStream("config.properties");//file name given cz in same project not in folder or give filepath
+			readconfig.load(fis); //to load the fis object 
+create string obj to store the readconfigs .getproperties variable value[stored in config.properties]
+string browser=readconfig.getproperties("name of key[variable]");
+
+create a class readconfig in utilities 
+
+
+
+Session#8:
+Execute test case using pom.xml within eclipse:
+
+step1:add this plugin to pom.xml file
+<pluginManagement>
+    <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>   //add this plugin for maven  repo
+            <version>3.0.0-M7</version>
+            <configuration>
+                <!-- Set to true to allow the build to continue even if tests fail -->
+                <testFailureIgnore>true</testFailureIgnore>
+                <!-- Include specific test runner classes by pattern -->
+                <includes>
+                    <!-- This will include any Java files ending with 'Run.java' for execution -->
+                    <include>**/*TestRunner.java</include>                        //you can testrunner or run file name the file 
+                </includes>
+            </configuration>
+        </plugin>
+    </plugins>
+</pluginManagement>
+
+after saving update this maven project and on Pom.xml<run as<maven test [to execute]
+
+                   
+
+a.Execute test case outside eclipse using maven (a build tool) :on google search "maven for windows",
+click on 1st link  i.e . "https://maven.apache.org/download.cgi" & when website opened then under Files header ,
+under link heading ,click on "Binary Zip Archive" to download and extract it ,then copy the folder and paste in "C Driver" then open bin's
+b.copy path i.e. C:\apache-maven-3.9.10\bin.
+c.then open evnvironment  varible<system variables>add> variable name :M2_HOME & variable value:C:\apache-maven-3.9.10 and save .
+d.then again add>variable name :MAVEN_HOME & variable value:C:\apache-maven-3.9.10 and save.
+e.then in same [system variables] in Path>edit environment value add 3 varaibles :1.C:\apache-maven-3.9.10\bin   2. %MAVEN_HOME%\bin 3. %M2_HOME%\bin and save
+f.now open command prompt to confirm by "mvn -version" and see the version & name. 
+
+g.now copy the project's path "C:\Users\Admin\eclipse-workspace\CucumberFramework" and paste in cmd with cd to switch to the projects path .
+h.enter command to execute the test "mvn test"
+
+
+a) Command Line Interface (CLI):do the  above steps g to h for this .
+  
+b) Batch file:
+1.open elcilpse folder >rightclick >open>text document then rename it "Run.bat" ----[bat is extension for batch file ] 
+
+{when not able to rename then do In the File Explorer window, click on the "View" tab/menu at the top.
+Hover over "Show".Click on "File name extensions". & just rename the file again it will work}
+
+2.open the run.bat file to enter the code below :
+cd C:\Users\Admin\eclipse-workspace\CucumberFramework
+mvn test
+
+and save .
+3.double click on "Run.bat" to execute.
+
+
+
+c) Jenkins:
+yashmore26\admin  <<username
+net user admin ""    <<to delete the set password of pc
+http://localhost:8080/ myjenkin local host link
+login id & passwword :admin for jenkin
+
+
+1.setup jenkin in pc  from offical website ,in account name :"givepc accountname" or chatgpt to find the method and password:pcpassword
+2.when installation in finshed go to startusing copy the initial pwd from the path and paste it then create the user admin ,once logged in then next step.
+3.click in new item ,project name & on Build Steps select "Execute Windows batch command" option and 
+write "cd C:\Users\Admin\eclipse-workspace
+Run.bat  " //to give path & runfile save it 
+
+and now just click on build now to see ..
+
+for maven project add maven plugin and global tool in that give java path and maven path  save it ..
+create maven prj and bulid to see
+
+
+##############SESSION 9########################
+1.to run testng with cucumber:
+in pom.xml file add testng & cumbertesng dependency ,remove junit dependency & update the prj .
+ <testng.version>7.10.2</testng.version>
+ <!-- This version is used by cucumber-java, cucumber-testng, and cucumber-picocontainer -->
+        <cucumber.version>7.18.0</cucumber.version>
+        
+  <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+            <scope>test</scope> <!-- Dependency is only needed for test compilation and execution -->
+        </dependency>
+        
+    <!-- Cucumber TestNG integration -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>${cucumber.version}</version> <!-- Uses cucumber.version property -->
+            <scope>test</scope> <!-- Dependency is only needed for test compilation and execution -->
+        </dependency>
+        
+        
+        Step3:
+a) Open test runner file (run.java)
+b) Remove /comment out "@RunWith(Cucumber.class)"
+c) Instead of junit imports, use testng imports in testrunner.java
+d) add "import io.cucumber.testng.AbstractTestNGCucumberTests;" in testrunner.java
+e) extend this class from "AbstractTestNGCucumberTests"
+public class testrunner extends AbstractTestNGCucumberTests{ /*This class will be empty*/
+}
+
+Step 3:
+Create TestNG.xml file and run
+
+
+
+#############SESSION 10###############
+Topics
+1. What is extent Report?
+2. How to generate the extent report?
+3. How to customize the report folder name?
+4. How to add screenshots to scenario steps?
+5. How to add system/environment information to report?
+6. How to change theme, document title & Report name ?
+
+Cucumber BDD framework Extent Report Integration
+1. What is Extent Report?
+Extent Report is an open-source library. With this:
+can create beautiful, interactive and detailed reports for automation tests.
+Extent reports are HTML-based documents that can carry detailed information about the test executed along with custom logs, screenshots and use a pie chart to represent an overview of the test.
+It can integrate with almost all the major testing frameworks like JUnit, TestNG, etc.
+STEPS TO INTEGRATE EXTENT REPORT IN CUCUMBER BDD FRAMEWORK
+Step 1: Firstly, add following extent report dependencies to pom.xml
+<dependency>
+            <groupId>tech.grasshopper</groupId>
+            <artifactId>extentreports-cucumber7-adapter</artifactId>
+            <version>${extentreports-cucumber7-adapter.version}</version>
+            <scope>test</scope>
+        </dependency>
+ <extentreports-cucumber7-adapter.version>1.14.0</extentreports-cucumber7-adapter.version>
+ 
+ 
+ Step 2:
+Create extent.properties file in
+/CucumberFramework/src/main/resource/extent.properties
+###extent reports properties###
+extent.reporter.spark.start=true  #spark function=true
+extent.reporter.spark.out=Report/Spark.html  #report path
+
+screenshot.dir=Screenshots/  #screenshot making folder
+screenshot.rel.path=../Screenshots/ #screenshot path
+
+#customize the report folder name by adding folder name and non repeating pattern
+basefolder.name=test-output/SparkReport  #basefolder name saved with output
+basefolder.datetimepattern=d-MMM-YY HH-mm-ss # name of folder with time&date
+
+#eg: SparkReport 18-june-2025 19-19-56
+
+Step 3:
+Add following @AfterStep method in step definition file to capture screenshot and attached it to extent report
+@AfterStep
+public void addScreenshot (Scenario scenario) {
+if(scenario.isFailed())
+{ final byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs (OutputType. BYTES);
+//attach image file report (data, media type, name of the attachment) 
+scenario.attach(screenshot, "image/png", scenario.getName());
+}
+
+step 4:
+In Test runner file "TestRunner.java" add extent report plugin
+plugin = {"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"},
+
+##SESSION 11##
+what is git:
+workspace in eclipse >>staging [commit]>>git[local repo][push code] >> github [remote repo]
+
+what is git hub:
+opposite of git hub . github [remote repo]  >>[pull][local repo] GIt >>staging  >>workspsce

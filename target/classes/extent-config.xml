@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    This is the Log4j2 XML configuration file.
+    It must be named 'log4j2.xml' and placed in your 'src/test/resources' directory.
+    This configuration enables console logging and file logging for your application,
+    with specific DEBUG levels for ExtentReports and your StepDefinition package
+    to help diagnose reporting issues.
+-->
+<Configuration status="INFO"> <!-- Log4j2's internal logging level. Keep as INFO. -->
+
+    <Appenders>
+        <!-- Console Appender: For displaying logs in the console (standard output). -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <!-- Rolling File Appender: For writing logs to a file, with rollover policies. -->
+        <RollingFile name="RollingFile" fileName="target/logs/app.log"
+                     filePattern="target/logs/app-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <!-- Rolls over daily -->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <!-- Rolls over if file size exceeds 10MB -->
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <!-- Keeps up to 7 archived log files -->
+            <DefaultRollerStrategy max="7"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <!-- Logger for ExtentReports to get detailed debugging info for report generation. -->
+        <Logger name="com.aventstack.extentreports" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+        </Logger>
+
+        <!-- Logger for your StepDefinition package to get detailed step-level logging. -->
+        <Logger name="StepDefinition" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+        </Logger>
+
+        <!-- Root Logger: Catches all messages not handled by specific loggers. -->
+        <!-- Set level to INFO to filter out most verbose internal logs, but you can change to DEBUG for more. -->
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+        </Root>
+    </Loggers>
+
+</Configuration>
